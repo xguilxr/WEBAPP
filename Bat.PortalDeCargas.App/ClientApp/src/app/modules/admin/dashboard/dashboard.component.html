@@ -1,0 +1,20 @@
+<div class="grid grid-cols-5">
+    <div class="rounded-lg shadow-lg col-span-3">
+
+        <div class="relative rounded-xl overflow-auto p-8">
+            <h2>REQUERIMENTO <span class="azul-claro">PORTAL</span>  DE <span class="azul-escuro">CARGAS</span> </h2>
+            <div class="grid grid-cols-2 gap-2 text-white text-sm text-center ">
+                <div class="grid grid-cols-2 col-span-2 gap-8">
+                    <div *ngIf="showBox(['regular','admin'])" class="p-4 box-categoria box-uploads col-span-1" (click)="goToUploads()"><span class="icon"><i class="icofont icofont-upload-alt"></i></span><span class="title">Uploads</span></div>
+                    <div *ngIf="showBox(['admin'])" class="p-4 box-categoria box-dimensoes col-span-1" (click)="goToDimensoes()"><span class="icon"><i class="icofont icofont-cubes"></i></span><span class="title">Dimensões</span></div>
+                    <div *ngIf="showBox(['admin'])" class="p-4 box-categoria box-templates col-span-1" (click)="goToTemplates()"><span class="icon"><i class="icofont icofont-ebook"></i></span><span class="title">Templates</span></div>
+                    <div *ngIf="showBox(['admin'])"class="p-4 box-categoria box-gerenciamento col-span-1" (click)="goToGerenciamento()"><span class="icon"><i class="icofont icofont-gears"></i></span><span class="title">Gerenciamento</span></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="banner-lateral col-span-2">
+        <img src="../../../assets/images/CAPA.png" alt="capa logo">
+    </div>
+</div>

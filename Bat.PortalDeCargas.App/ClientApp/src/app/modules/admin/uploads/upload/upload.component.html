@@ -1,0 +1,114 @@
+<div *transloco="let t; read: 'TemplateUploadScreen'" class="container uploads">
+    <h3>Upload</h3>
+
+    <div class="grid gap-4 grid-cols-6 main-view fill">
+        <div class="grid col-span-3 shadow-lg p-4">
+            <span class="name">{{template.templateName}}</span> - {{template.templateDescription}}
+        </div>
+        <div class="grid col-span-3 shadow-lg p-4">
+            <div class="grid mt-4 gap-4 grid-cols-2 main-view fill">
+                <div class="grid col-span-1">
+                    <button (click)="downloadTemplate(template.templateId)"
+                            class="btn-default bg-gray">
+                        {{t('downloadTemplate')}}
+                    </button>
+                </div>
+
+                <div class="grid col-span-1">
+                    <button (click)="fileInput.click()" class="btn-default bg-green">{{t('uploadFile')}}</button>
+                </div>
+            </div>
+            <input #fileInput
+                   (change)="uploadFile($event)"
+                   accept=".xlsx;.xls;.csv"
+                   hidden="true"
+                   id="uploadFile"
+                   name="uploadFile"
+                   type="file" />
+        </div>
+
+    </div>
+
+
+    
+
+                <div *ngIf="uploadResult !== null" class="grid mt-4 mb-4 shadow-lg p-4">
+                    <div class="lista-box container p-0">
+                        <div class="result-status mb-4">
+                            <span class="itens mr-4"><strong class="mr-2">Total de Linhas:</strong>{{uploadResult.totalLines}}</span> 
+                            <span class="itens mr-4"><strong class="mr-2">Total de Linhas com Erro:</strong>{{uploadResult.totalInvalidLines}}</span> 
+                            <span class="itens mr-4"><strong class="mr-2">Total de Erros de Validação:</strong>{{uploadResult.totalValidationMessages}}</span> 
+                        </div>
+                        <ngx-datatable [columnMode]="columnMode.force"
+                                       [footerHeight]="50"
+                                       [headerHeight]="40"
+                                       [messages]="messages"
+                                       [reorderable]="true"
+                                       [rowHeight]="'auto'"
+                                       [rows]="uploadResult.details"
+                                       [scrollbarH]="true"
+                                       [virtualization]="false"
+                                       class="material"
+                                       style="width: 100%;"
+                                       trackByProp="templateId">
+
+                            <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="true" prop="rowNumber">
+                                <ng-template ngx-datatable-header-template>
+                                    <span class="text-bold">{{ t('rowNumber') }}</span>
+                                </ng-template>
+                            </ngx-datatable-column>
+
+                            <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="true" prop="templateDimensionName">
+                                <ng-template ngx-datatable-header-template><span class="text-bold">{{ t('templateDimensionName') }}</span></ng-template>
+                            </ngx-datatable-column>
+
+                            <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="true" prop="templateDimensionOrder">
+                                <ng-template ngx-datatable-header-template>
+                                    <span class="text-bold">{{ t('templateDimensionOrder') }}</span>
+                                </ng-template>
+                            </ngx-datatable-column>
+
+                            <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="true" prop="dimensionName">
+                                <ng-template ngx-datatable-header-template>
+                                    <span class="text-bold">{{ t('dimensionName') }}</span>
+                                </ng-template>
+                            </ngx-datatable-column>
+
+
+                            <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="true" prop="value">
+                                <ng-template ngx-datatable-header-template>
+                                    <span class="text-bold">{{ t('value') }}</span>
+                                </ng-template>
+                            </ngx-datatable-column>
+                            <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="true" prop="validationMessage">
+                                <ng-template ngx-datatable-header-template>
+                                    <span class="text-bold">{{ t('validationMessage') }}</span>
+                                </ng-template>
+                            </ngx-datatable-column>
+
+
+                        </ngx-datatable>
+                    </div>
+
+                </div>
+
+            <div class="grid mt-4 gap-4 grid-cols-6 main-view fill">
+                <div class="grid col-span-3 shadow-lg p-4" style="height:320px">
+                    <h4>{{t('validations')}}</h4>
+                    <div class="description pr-4">{{template.templateValidation}}</div>
+
+                </div>
+
+                <div class="grid col-span-3 shadow-lg p-4" style="height:320px">
+                    <h4>{{t('updateFeatures')}}</h4>
+                    <div class="description pr-4">{{template.templateUpdateFeatures}}</div>
+
+                </div>
+
+            </div>
+
+            <div class="footer text-right mt-4">
+                <button (click)="backToDashboard()" class="btn-default back m-0">Voltar</button>
+            </div>
+
+        </div>

@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"
+                id="root"
+                xmlns="">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <data name="TemplateFileFormatMustBeFilled" xml:space="preserve">
+        <value>O tipo de arquivo informado é inválido</value>
+    </data>
+    <data name="TemplateNameMustBeUnique" xml:space="preserve">
+        <value>O nome do template deve ser unico</value>
+    </data>
+    <data name="TemplateNameMustBeFilled" xml:space="preserve">
+        <value>O nome do template é obrigatório</value>
+    </data>
+    <data name="TemplateBlobUrlMustBeValidUrl" xml:space="preserve">
+        <value>O endereço do blob deve ser uma URL válida</value>
+    </data>
+    <data name="TemplateDescriptionMustBeFilled" xml:space="preserve">
+        <value>A descrição do template é obrigatória</value>
+    </data>
+    <data name="TemplateEndUploadWindowInvalid" xml:space="preserve">
+        <value>Janela de atualização inválida</value>
+    </data>
+    <data name="TemplateNotificationEmailInvalid" xml:space="preserve">
+        <value>O email de notificação não é válido</value>
+    </data>
+    <data name="TemplateNotificationTextMustBeFilled" xml:space="preserve">
+        <value>A mensagem de notificação é obrigatória</value>
+    </data>
+    <data name="TemplatePeriodicityInvalid" xml:space="preserve">
+        <value>A periodicidade informada não é válida</value>
+    </data>
+    <data name="TemplateDimensionOrderGap" xml:space="preserve">
+        <value>Não podem haver furos na ordem das colunas</value>
+    </data>
+    <data name="GetFilteredError" xml:space="preserve">
+        <value>Ocorreu um erro ao obter os templates</value>
+    </data>
+    <data name="GetTemplateByIdError" xml:space="preserve">
+        <value>Ocorreu um erro ao obter o template</value>
+    </data>
+    <data name="PostError" xml:space="preserve">
+        <value>Ocorreu um erro salvando o tem plate</value>
+    </data>
+    <data name="DeleteError" xml:space="preserve">
+        <value>Ocorreu um erro removendo o template</value>
+    </data>
+    <data name="InvalidFileFormat" xml:space="preserve">
+        <value>O arquivo informado não está no formato esperado</value>
+    </data>
+    <data name="ValidationResut" xml:space="preserve">
+        <value>Resultado da validação</value>
+    </data>
+    <data name="EmptyFile" xml:space="preserve">
+        <value>O arquivo está vazio</value>
+    </data>
+</root>

@@ -1,0 +1,75 @@
+<div *transloco="let t; read: 'TemplateReport'">
+    <div class="flex flex-row">
+        <div class="basis-2/6 flex flex-row">
+            <mat-form-field appearance="" class="search-template">
+                <mat-label>{{ t('templateName') }}</mat-label>
+                <input [(ngModel)]="filter.templateName" matInput placeholder="{{ t('templateName') }}">
+            </mat-form-field>
+            <mat-form-field appearance="" class="search-template">
+                <mat-label>{{ t('userName') }}</mat-label>
+                <input [(ngModel)]="filter.userName" matInput placeholder="{{ t('userName') }}">
+            </mat-form-field>
+            <mat-form-field appearance="" class="search-template">
+                <mat-label>{{ t('startDate') }}</mat-label>
+                <input [matDatepicker]="startDatePicker" [(ngModel)]="startDate" matInput placeholder="{{ t('startDate') }}">
+                <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker  #startDatePicker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="" class="search-template">
+                <mat-label>{{ t('endDate') }}</mat-label>
+                <input #endDateInput [matDatepicker]="endDatePicker" [(ngModel)]="endDate" matInput placeholder="{{ t('endDate') }}">
+                <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #endDatePicker></mat-datepicker>
+            </mat-form-field>
+
+            <button (click)="getFilteredData()" aria-label="search" class="ml-2 mt-8" color="primary"
+                    mat-mini-fab>
+                <mat-icon>search</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <ngx-datatable (page)="pageChanged($event)"
+                   [columnMode]="columnMode.force"
+                   [count]="templateLog.totalOfItems"
+                   [externalPaging]="true"
+                   [footerHeight]="50"
+                   [headerHeight]="40"
+                   [limit]="templateLog.itemsPerPage"
+                   [messages]="messages"
+                   [offset]="templateLog.currentPage - 1"
+                   [reorderable]="false"
+                   [rowHeight]="'auto'"
+                   [rows]="templateLog.items"
+                   [scrollbarH]="true"
+                   [virtualization]="false"
+                   class="material"
+                   style="width: 100%;"
+                   trackByProp="templateLogId">
+
+        <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false" prop="templateName">
+            <ng-template ngx-datatable-header-template><span class="text-bold">{{ t('templateName') }}</span></ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false" prop="actionDate">
+            <ng-template ngx-datatable-header-template>
+                <span class="text-bold">{{ t('actionDate') }}</span>
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                {{value | date:'short':'0':'pt'}}
+            </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false" prop="userName">
+            <ng-template ngx-datatable-header-template>
+                <span class="text-bold">{{ t('userName') }}</span>
+            </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false" prop="action.name">
+            <ng-template ngx-datatable-header-template>
+                <span class="text-bold">{{ t('actionName') }}</span>
+            </ng-template>
+        </ngx-datatable-column>
+    </ngx-datatable>
+</div>

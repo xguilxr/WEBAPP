@@ -1,0 +1,31 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "Bat.PortalDeCargas.Resource/1.0.0": {
+        "runtime": {
+          "Bat.PortalDeCargas.Resource.dll": {}
+        },
+        "resources": {
+          "en-us/Bat.PortalDeCargas.Resource.resources.dll": {
+            "locale": "en-us"
+          },
+          "pt-BR/Bat.PortalDeCargas.Resource.resources.dll": {
+            "locale": "pt-BR"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Bat.PortalDeCargas.Resource/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

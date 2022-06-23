@@ -1,0 +1,10 @@
+<h3 mat-dialog-title *ngIf="config.title">{{ config.title }}</h3>
+
+<mat-dialog-content *ngIf="config.content" class="mb-12">
+  <div [innerHTML]="config.content"></div>
+</mat-dialog-content>
+
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+  <button mat-button color="primary" mat-dialog-close *ngIf="isConfirmDialog()">{{ config.cancelButtonText | uppercase }}</button>
+  <button mat-button color="primary" [mat-dialog-close]="true">{{ config.okButtonText | uppercase }}</button>
+</mat-dialog-actions>

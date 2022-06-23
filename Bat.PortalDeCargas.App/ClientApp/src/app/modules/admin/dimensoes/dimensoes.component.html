@@ -1,0 +1,99 @@
+<div class="container dimensoes" *transloco="let t; read: 'Dimension'">
+    <h3>{{ t('title') }}</h3>
+    <div class="flex flex-row">
+
+        <div class="basis-2/6 flex flex-row">
+            <mat-form-field appearance="" class="search-dimension">
+                <mat-label>{{ t('searchTitle') }}</mat-label>
+                <input matInput placeholder="Placeholder" [(ngModel)]="filter.name">
+                <mat-hint>{{ t('searchMessage') }}</mat-hint>
+            </mat-form-field>
+            <button class="ml-2 mt-8" mat-mini-fab color="primary" aria-label="search" (click)="getFilteredDimension()">
+                <mat-icon>search</mat-icon>
+            </button>
+        </div>
+
+
+        <div class="dimension-generate-file">
+            <button class="btn-default bg-orange" color="primary" (click)="getExcelFile()">
+                Baixar Dimensão
+            </button>
+
+            <button class="btn-default bg-green" (click)="createDimesion()">{{ t('createDimension') }}</button>
+        </div>
+    </div>
+
+
+    <div class="lista-box container p-0">
+
+      <ngx-datatable
+        [rows]="Dimensions.items"
+        style="width: 100%;"
+        class="material"
+        [rowHeight]="'auto'"
+        [footerHeight]="50"
+        [externalPaging]="true"
+        [virtualization]="false"
+        [reorderable]="false"
+        [count]="Dimensions.totalOfItems"
+        [offset]="Dimensions.currentPage - 1"
+        [limit]="Dimensions.itemsPerPage"
+        (page)="pageChanged($event)"
+        [messages]="messages"
+        trackByProp="dimensionId"
+        [columnMode]="ColumnMode.force"
+        [scrollbarH]="true"
+        [headerHeight]="40"
+        >
+
+        <ngx-datatable-column prop="dimensionName" [resizeable]="false" [draggable]="false" [sortable]="false" >
+            <ng-template ngx-datatable-header-template><span class="text-bold">{{ t('name') }}</span></ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column prop="type" [resizeable]="false" [draggable]="false" [sortable]="false"  >
+            <ng-template ngx-datatable-header-template><span class="text-bold">{{ t('type') }}</span></ng-template>
+          </ngx-datatable-column>
+
+
+          <ngx-datatable-column prop="createdUserName" [resizeable]="false" [draggable]="false" [sortable]="false" >
+            <ng-template ngx-datatable-header-template><span class="text-bold">{{ t('UserCreate') }}</span></ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column prop="createdDate" [resizeable]="false" [draggable]="false" [sortable]="false" >
+            <ng-template ngx-datatable-header-template><span class="text-bold">{{ t('DateCreate') }}</span></ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column prop="updatedUserName" [resizeable]="false" [draggable]="false" [sortable]="false" >
+            <ng-template ngx-datatable-header-template><span class="text-bold">{{ t('UserUpdate') }}</span></ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column prop="updatedDate" [resizeable]="false" [draggable]="false" [sortable]="false" >
+            <ng-template ngx-datatable-header-template><span class="text-bold">{{ t('DateUpdate') }}</span></ng-template>
+          </ngx-datatable-column>
+
+
+          <ngx-datatable-column prop="dimensionId" [resizeable]="false" [draggable]="false" [sortable]="false"  >
+            <ng-template ngx-datatable-header-template></ng-template>
+            <ng-template ngx-datatable-cell-template let-value="value">
+              <button mat-icon-button (click)="edit(value)" [title]="t('editDimension')" [aria-label]="t('editDimension')">
+                <mat-icon class="orange-400-fg">edit</mat-icon>
+              </button>
+
+              <button mat-icon-button (click)="delete(value)" [title]="t('deleteDimension')" [aria-label]="t('deleteDimension')">
+                <mat-icon class="orange-400-fg">delete_forever</mat-icon>
+              </button>
+
+              <button mat-icon-button (click)="copyDimension(value)" [title]="t('copyDimension')" [aria-label]="t('copyDimension')">
+                <mat-icon class="orange-400-fg">file_copy</mat-icon>
+              </button>
+            </ng-template>
+          </ngx-datatable-column>
+
+        </ngx-datatable>
+    </div>
+
+    <div class="footer text-right">
+        <button class="btn-default back" (click)="backToDashboard()">{{ t('back') }}</button>
+    </div>
+
+</div>

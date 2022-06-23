@@ -1,0 +1,94 @@
+<div class="container dimensoes"  *transloco="let t">
+    <h3>{{ t('User.title') }}</h3>
+
+    <div class="flex flex-row">
+
+        <div class="basis-2/6 flex flex-row">
+            <mat-form-field appearance="" class="search-dimension">
+                <mat-label>{{ t('User.searchTitle') }}</mat-label>
+                <input matInput placeholder="Placeholder" [(ngModel)]="filter.name">
+                <mat-hint>{{ t('User.searchMessage') }}</mat-hint>
+            </mat-form-field>
+
+            <button class="ml-2 mt-8" mat-mini-fab color="primary" aria-label="search" (click)="getPaginatedUser()">
+                <mat-icon>search</mat-icon>
+            </button>
+
+        </div>
+
+        <div class="dimension-generate-file">
+            <button class="btn-default bg-green" (click)="createUser()">{{ t('User.createUser') }}</button>
+        </div>
+
+    </div>
+
+
+    <div class="lista-box container p-0" >
+      
+      <ngx-datatable 
+        [rows]="Users.items" 
+        style="width: 100%;"       
+        class="material"             
+        [rowHeight]="'auto'"    
+        [footerHeight]="50"
+        [externalPaging]="true"
+        [virtualization]="false" 
+        [reorderable]="false"      
+        [count]="Users.totalOfItems"
+        [offset]="Users.currentPage - 1"
+        [limit]="Users.itemsPerPage"
+        (page)="pageChanged($event)"        
+        [messages]="messages"
+        trackByProp="userId" 
+        [columnMode]="ColumnMode.force"
+        [scrollbarH]="true"
+        [headerHeight]="40"
+        > 
+        
+        <ngx-datatable-column prop="userName" [resizeable]="false" [draggable]="false" [sortable]="false" >
+            <ng-template ngx-datatable-header-template><span class="text-bold">{{ t('name') }}</span></ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column prop="userEmail" [resizeable]="false" [draggable]="false" [sortable]="false" >
+          <ng-template ngx-datatable-header-template><span class="text-bold">{{ t('email') }}</span></ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column prop="userType" [resizeable]="false" [draggable]="false" [sortable]="false" >
+          <ng-template ngx-datatable-header-template><span class="text-bold">{{ t('type') }}</span></ng-template>
+          <ng-template ngx-datatable-cell-template let-value="value">
+            <span>{{ getType(value) }}</span>
+          </ng-template>
+        </ngx-datatable-column>
+
+
+
+        <ngx-datatable-column prop="userId" [resizeable]="false" [draggable]="false" [sortable]="false"  >
+          <ng-template ngx-datatable-header-template></ng-template>
+          <ng-template ngx-datatable-cell-template let-value="value">
+           
+            <button mat-icon-button (click)="edit(value)" [title]="t('User.editUser')" [aria-label]="t('User.editUser')">
+              <mat-icon class="orange-400-fg">edit</mat-icon>
+            </button>     
+            
+            <button mat-icon-button (click)="delete(value)" [title]="t('User.deleteUser')" [aria-label]="t('User.deleteUser')">
+              <mat-icon class="orange-400-fg">delete_forever</mat-icon>
+            </button>   
+
+            <button mat-icon-button (click)="changePassword(value)" [title]="t('copyDimension')" [aria-label]="t('changePassword')">
+              <mat-icon class="orange-400-fg">key</mat-icon>
+            </button>    
+           
+          </ng-template>
+        </ngx-datatable-column>
+
+        
+        </ngx-datatable>
+
+        
+    </div>
+
+    <div class="footer text-right">
+        <button class="btn-default back" (click)="backToDashboard()">{{ t('back') }}</button>
+    </div>
+
+</div>

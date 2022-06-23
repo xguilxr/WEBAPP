@@ -1,0 +1,166 @@
+<div *transloco="let t; read: 'UploadReport'">
+    <div class="flex flex-row">
+        <div class="basis-2/6 flex flex-row">
+            <mat-form-field appearance="" class="search-template">
+                <mat-label>{{ t('templateName') }}</mat-label>
+                <input [(ngModel)]="filter.templateName" matInput placeholder="{{ t('templateName') }}">
+            </mat-form-field>
+            <mat-form-field appearance="" class="search-template">
+                <mat-label>{{ t('userName') }}</mat-label>
+                <input [(ngModel)]="filter.userName" matInput placeholder="{{ t('userName') }}">
+            </mat-form-field>
+            <mat-form-field appearance="" class="search-template">
+                <mat-label>{{ t('startDate') }}</mat-label>
+                <input [matDatepicker]="startDatePicker" [(ngModel)]="startDate" matInput placeholder="{{ t('startDate') }}">
+                <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker  #startDatePicker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="" class="search-template">
+                <mat-label>{{ t('endDate') }}</mat-label>
+                <input #endDateInput [matDatepicker]="endDatePicker" [(ngModel)]="endDate" matInput placeholder="{{ t('endDate') }}">
+                <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #endDatePicker></mat-datepicker>
+            </mat-form-field>
+
+            <button (click)="getFilteredData()" aria-label="search" class="ml-2 mt-8" color="primary"
+                    mat-mini-fab>
+                <mat-icon>search</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <ngx-datatable #myTable
+                   (page)="pageChanged($event)"
+                   [columnMode]="columnMode.force"
+                   [count]="log.totalOfItems"
+                   [externalPaging]="true"
+                   [footerHeight]="50"
+                   [headerHeight]="40"
+                   [limit]="log.itemsPerPage"
+                   [messages]="messages"
+                   [offset]="log.currentPage - 1"
+                   [reorderable]="false"
+                   [rowHeight]="'auto'"
+                   [rows]="log.items"
+                   [scrollbarH]="true"
+                   [virtualization]="false"
+                   class="material expandable"
+                   style="width: 100%;"
+                   trackByProp="uploadLogId">
+        <!-- Row Detail Template -->
+        <ngx-datatable-row-detail #myDetailRow (toggle)="onDetailToggle($event)" [rowHeight]="auto">
+            <ng-template let-expanded="expanded" let-row="row" ngx-datatable-row-detail-template>
+                <ngx-datatable [columnMode]="columnMode.force"
+                               [footerHeight]="50"
+                               [headerHeight]="40"
+                               [messages]="messages"
+                               [reorderable]="true"
+                               [rowHeight]="'auto'"
+                               [rows]="row.details.items"
+                               [scrollbarH]="true"
+                               [virtualization]="false"
+                               class="material"
+                               style="width: 100%;"
+                               trackByProp="templateId">
+
+                    <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="true" prop="rowNumber">
+                        <ng-template ngx-datatable-header-template>
+                            <span class="text-bold">{{ t('rowNumber') }}</span>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="true" prop="templateDimensionName">
+                        <ng-template ngx-datatable-header-template><span class="text-bold">{{ t('templateDimensionName') }}</span></ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="true" prop="templateDimensionOrder">
+                        <ng-template ngx-datatable-header-template>
+                            <span class="text-bold">{{ t('templateDimensionOrder') }}</span>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="true" prop="dimensionName">
+                        <ng-template ngx-datatable-header-template>
+                            <span class="text-bold">{{ t('dimensionName') }}</span>
+                        </ng-template>
+                    </ngx-datatable-column>
+
+                    <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="true" prop="value">
+                        <ng-template ngx-datatable-header-template>
+                            <span class="text-bold">{{ t('value') }}</span>
+                        </ng-template>
+                    </ngx-datatable-column>
+                    <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="true" prop="validationMessage">
+                        <ng-template ngx-datatable-header-template>
+                            <span class="text-bold">{{ t('validationMessage') }}</span>
+                        </ng-template>
+                    </ngx-datatable-column>
+                </ngx-datatable>
+            </ng-template>
+        </ngx-datatable-row-detail>
+
+        <ngx-datatable-column
+            [canAutoResize]="false"
+            [draggable]="false"
+            [resizeable]="false"
+            [sortable]="false"
+            [width]="50"
+        >
+            <ng-template let-expanded="expanded" let-row="row" ngx-datatable-cell-template>
+                <a
+                    (click)="toggleExpandRow(row)"
+                    [class.datatable-icon-down]="expanded"
+                    [class.datatable-icon-right]="!expanded"
+                    href="javascript:void(0)"
+                    title="Expand/Collapse Row"
+                >
+                </a>
+            </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false" prop="templateName">
+            <ng-template ngx-datatable-header-template><span class="text-bold">{{ t('templateName') }}</span></ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false" prop="uploadLogDate">
+            <ng-template ngx-datatable-header-template>
+                <span class="text-bold">{{ t('uploadLogDate') }}</span>
+            </ng-template>
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                {{value | date:'short':'0':'pt'}}
+            </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false" prop="userName">
+            <ng-template ngx-datatable-header-template>
+                <span class="text-bold">{{ t('userName') }}</span>
+            </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false" prop="status">
+            <ng-template ngx-datatable-header-template>
+                <span class="text-bold">{{ t('status') }}</span>
+            </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false" prop="totalLines">
+            <ng-template ngx-datatable-header-template>
+                <span class="text-bold">{{ t('totalLines') }}</span>
+            </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false" prop="totalInvalidLines">
+            <ng-template ngx-datatable-header-template>
+                <span class="text-bold">{{ t('totalInvalidLines') }}</span>
+            </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false" prop="totalValidationMessages">
+            <ng-template ngx-datatable-header-template>
+                <span class="text-bold">{{ t('totalValidationMessages') }}</span>
+            </ng-template>
+        </ngx-datatable-column>
+
+    </ngx-datatable>
+</div>

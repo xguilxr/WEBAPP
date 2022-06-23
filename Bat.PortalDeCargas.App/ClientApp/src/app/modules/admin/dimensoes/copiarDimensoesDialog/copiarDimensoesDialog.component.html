@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Copiar Dimensão </h1>
+<div mat-dialog-content>
+  <p>Informe o nome da nova Dimensão?</p>
+  <mat-form-field appearance="fill" style="width: 300px;">    
+    <input matInput [(ngModel)]="data.name">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-button color="primary" (click)="onNoClick()">CANCELAR</button>
+  <button mat-button mat-button color="primary" [mat-dialog-close]="data.name" cdkFocusInitial>OK</button>
+</div>

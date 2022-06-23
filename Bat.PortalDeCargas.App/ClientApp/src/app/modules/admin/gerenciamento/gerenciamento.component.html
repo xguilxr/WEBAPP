@@ -1,0 +1,19 @@
+<div class="container gerenciamento">
+    <h3>Gerenciamento</h3>
+    <mat-tab-group>
+        <mat-tab label="Dimensões">
+            <dimensions-report></dimensions-report>
+
+        </mat-tab>
+        <mat-tab label="Templates">
+            <template-report></template-report>
+
+        </mat-tab>
+        <mat-tab label="Uploads">
+            <upload-report></upload-report>
+        </mat-tab>
+    </mat-tab-group>
+    <div class="footer text-right">
+        <button (click)="backToDashboard()" class="btn-default back">Voltar</button>
+    </div>
+</div>

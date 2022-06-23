@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Valores Permitidos </h1>
+<div mat-dialog-content>
+    <ul class="lista-valores">
+        <li *ngFor="let domain of data.domains"> {{ domain.domainValue }} </li>
+      </ul>
+</div>
+<div mat-dialog-actions>  
+  <button mat-button mat-button color="primary" (click) ="onClick()" cdkFocusInitial>OK</button>
+</div>

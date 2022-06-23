@@ -1,0 +1,51 @@
+<div class="container" *transloco="let t">
+    <h3>{{ t('User.createUser') }}</h3>
+
+      <div class="mobile-column flex flex-row gap-2">
+        <form [formGroup] = "userForm" (ngSubmit)="onSubmit()">
+          <div class="p-4 rounded-lg">
+
+              <mat-form-field appearance="fill" class="min-w-96 mr-6">
+                  <mat-label>{{ t('name') }}</mat-label>
+                  <input matInput placeholder="Placeholder" id="Name" formControlName="name" required>
+                  <mat-error *ngIf="!userForm.get('name').valid">{{ t('User.userNameFill') }}</mat-error>
+              </mat-form-field>
+              <br>
+              <mat-form-field appearance="fill" class="min-w-200">
+                  <mat-label>{{ t('email') }}</mat-label>
+                  <input matInput placeholder="Placeholder" id ="Text" formControlName="email" required>
+                  <mat-error *ngIf="!userForm.get('email').valid">{{ t('User.userEmailFill') }}</mat-error>
+              </mat-form-field>
+              <br>
+              <mat-form-field appearance="fill" class="min-w-96 mr-6" *ngIf="userId == 0">
+                <mat-label>{{ t('password') }}</mat-label>
+                <input matInput placeholder="Placeholder" id="password" formControlName="password" required type="password">
+                <mat-error *ngIf="!userForm.get('password').valid">{{ t('User.userPasswordFill') }}</mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="fill" class="min-w-96 mr-6" *ngIf="userId == 0">
+                <mat-label>{{ t('confirmpassword') }}</mat-label>
+                <input matInput placeholder="Placeholder" id="confirmpassword" formControlName="confirmpassword" required type="password">
+                <mat-error *ngIf="!userForm.get('confirmpassword').valid">{{ t('User.userConfirmPasswordFill') }}</mat-error>
+              </mat-form-field>
+
+              <div class="w-200 mb-8">
+                  <mat-radio-group aria-label="tipo" id ="Type" formControlName = "type" required    >
+                      <mat-label class="mr-4">{{ t('type') }}</mat-label>
+                      <mat-radio-button class="mr-4" value="1" >{{ t('administrator') }}</mat-radio-button>
+                      <mat-radio-button class="mr-4" value="2">{{ t('regular') }}</mat-radio-button>                 
+                  </mat-radio-group>
+                  <mat-error *ngIf="!userForm.get('type').valid">{{ t('User.userTypeFill') }}</mat-error>
+              </div>
+              
+              <div class="footer text-right ">
+                  <button class="btn-default bg-green back" type="submit">{{ t('save') }}</button>
+              </div>
+
+          </div>
+        </form>
+      </div>  
+    <div class="footer text-right">
+        <button class="btn-default back" (click)="backToTemplates()">{{ t('back') }}</button>
+    </div>
+</div>

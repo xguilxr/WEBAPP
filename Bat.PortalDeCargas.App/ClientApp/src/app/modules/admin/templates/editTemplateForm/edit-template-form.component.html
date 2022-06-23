@@ -1,0 +1,256 @@
+<div *transloco="let t; read:'Template.Cadastro'" class="container templates">
+    <h3 *ngIf="template.templateId === 0">{{t('createTemplateTitle')}}</h3>
+    <h3 *ngIf="template.templateId !== 0">{{t('editTemplateTitle')}}</h3>
+
+    <div class="flex flex-row gap-2">
+        <form (ngSubmit)="onSubmit()" [formGroup]="templateForm">
+            <mat-tab-group>
+                <mat-tab label="{{t('registerTabTitle')}} ">
+                    <div class="container-mobile flex flex-column">
+
+                        <div class="mobile-column pt-10 pr-4">
+                            <div class="flex flex-row twoo-columns">
+                                <mat-form-field appearance="fill" class="mr-6">
+                                    <mat-label>{{t('name')}}</mat-label>
+                                    <input formControlName="name" id="name" matInput placeholder="{{t('namePlaceholder')}}">
+                                    <mat-error *ngIf="!templateForm.get('name').valid">{{t('nameError')}}</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field appearance="fill" class="mr-6">
+                                    <mat-label>{{t('fileFormat')}}</mat-label>
+                                    <select formControlName="fileFormat" id="fileFormat" matNativeControl>
+                                        <option value="1">.xlsx</option>
+                                        <option value="2">.xls</option>
+                                        <option value="3">.csv</option>
+                                    </select>
+                                </mat-form-field>
+                            </div>
+                            <div class="mb-4  mr-6">
+                                <mat-form-field appearance="fill" class="w-200">
+                                    <mat-label>{{t('description')}}</mat-label>
+                                    <input formControlName="description" id="description" matInput
+                                           placeholder="{{t('descriptionPlaceholder')}}">
+                                    <mat-error *ngIf="!templateForm.get('description').valid">{{t('descriptionError')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div class=" mb-4  mr-6">
+                                <mat-radio-group aria-label="Periodicidade" formControlName="periodicity">
+                                    <mat-label class="mr-4"><strong>{{t('periodicity')}}</strong></mat-label>
+                                    <mat-radio-button class="mr-4" value='1'>{{t('monthly')}}</mat-radio-button>
+                                    <mat-radio-button class="mr-4" value='2'>{{t('daily')}}</mat-radio-button>
+                                    <mat-radio-button class="mr-4" value='3'>{{t('weakly')}}</mat-radio-button>
+                                    <mat-radio-button class="mr-4" value='4'>{{t('yearly')}}</mat-radio-button>
+                                    <mat-radio-button class="mr-4" value='5'>{{t('quarterly')}}</mat-radio-button>
+                                </mat-radio-group>
+
+                            </div>
+                            <div class="w-200 mb-4  mr-6">
+                                <mat-form-field *ngIf="templateForm.value.periodicity === '1'" appearance="fill"
+                                                class="min-w-70 mr-6">
+                                    <mat-label>{{t('finalDate')}}</mat-label>
+                                    <input formControlName="endUploadWindow" id="endUploadWindowMonthly" matInput>
+                                    <mat-error *ngIf="!templateForm.get('endUploadWindow').valid">{{t('endUploadWindowMonthlyError')}}</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field *ngIf="templateForm.value.periodicity === '3'" appearance="fill"
+                                                class="min-w-80 mr-6">
+                                    <mat-label>{{t('finalDate')}}</mat-label>
+                                    <select formControlName="endUploadWindow" id="endUploadWindowWeakly" matNativeControl>
+                                        <option value="1">{{t('sunday')}}</option>
+                                        <option value="2">{{t('monday')}}</option>
+                                        <option value="3">{{t('tuesday')}}</option>
+                                        <option value="3">{{t('wednesday')}}</option>
+                                        <option value="3">{{t('thursday')}}</option>
+                                        <option value="3">{{t('friday')}}</option>
+                                        <option value="3">{{t('saturday')}}</option>
+                                    </select>
+                                    <mat-error *ngIf="!templateForm.get('endUploadWindow').valid">{{t('endUploadWindowWeaklyError')}}</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field *ngIf="templateForm.value.periodicity === '4'" appearance="fill"
+                                                class="min-w-70 mr-6">
+                                    <mat-label>{{t('finalDate')}}</mat-label>
+                                    <select formControlName="endUploadWindow" id="endUploadWindowYearly" matNativeControl>
+                                        <option value="1">{{t('january')}}</option>
+                                        <option value="2">{{t('february')}}</option>
+                                        <option value="3">{{t('march')}}</option>
+                                        <option value="3">{{t('april')}}</option>
+                                        <option value="3">{{t('may')}}</option>
+                                        <option value="3">{{t('june')}}</option>
+                                        <option value="3">{{t('july')}}</option>
+                                        <option value="3">{{t('august')}}</option>
+                                        <option value="3">{{t('september')}}</option>
+                                        <option value="3">{{t('october')}}</option>
+                                        <option value="3">{{t('november')}}</option>
+                                        <option value="3">{{t('december')}}</option>
+                                    </select>
+                                    <mat-error *ngIf="!templateForm.get('endUploadWindow').valid">{{t('endUploadWindowYearlyError')}}</mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field *ngIf="templateForm.value.periodicity === '5'" appearance="fill"
+                                                class="min-w-70 mr-6">
+                                    <mat-label>{{t('finalDate')}}</mat-label>
+                                    <select formControlName="endUploadWindow" id="endUploadWindowQuaterly" matNativeControl>
+                                        <option value="1">{{t('january')}}</option>
+                                        <option value="2">{{t('february')}}</option>
+                                        <option value="3">{{t('march')}}</option>
+                                        <option value="3">{{t('april')}}</option>
+                                        <option value="3">{{t('may')}}</option>
+                                        <option value="3">{{t('june')}}</option>
+                                        <option value="3">{{t('july')}}</option>
+                                        <option value="3">{{t('august')}}</option>
+                                        <option value="3">{{t('september')}}</option>
+                                        <option value="3">{{t('october')}}</option>
+                                        <option value="3">{{t('november')}}</option>
+                                        <option value="3">{{t('december')}}</option>
+                                    </select>
+                                    <mat-error *ngIf="!templateForm.get('endUploadWindow').valid">{{t('endUploadWindowQuaterlyError')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="w-200 mb-4 ">
+
+                                <mat-form-field appearance="fill" class="min-w-96 mr-6">
+                                    <mat-label>{{t('notificationEmail')}}</mat-label>
+                                    <input formControlName="notificationEmail" matInput
+                                           placeholder="{{t('blobAddressPlaceholder')}}">
+                                    <mat-error *ngIf="!templateForm.get('notificationEmail').valid">{{t('notificationEmailError')}}</mat-error>
+                                </mat-form-field>
+
+
+                            </div>
+
+                            <div class="min-w-96 mb-4  mr-6">
+                                <mat-form-field appearance="fill" class="w-200">
+                                    <mat-label>{{t('blobAddress')}}</mat-label>
+                                    <input formControlName="blobAddress" matInput
+                                           placeholder="{{t('blobAddressPlaceholder')}}">
+                                    <mat-error *ngIf="!templateForm.get('blobAddress').valid">{{t('blobAddressError')}}</mat-error>
+                                </mat-form-field>
+                            </div>
+
+
+                            
+                        </div>
+                        <div class="mobile-column pt-10 col-span-2">
+                            <mat-form-field appearance="fill" class="min-w-200 mb-2">
+                                <mat-label>{{t('updateFeatures')}}</mat-label>
+                                <textarea class="h-30" formControlName="updateFeatures"
+                                          matInput placeholder="{{t('updateFeaturesPlaceholder')}}"></textarea>
+                            </mat-form-field>
+                            <mat-form-field appearance="fill" class="min-w-200 mb-2">
+                                <mat-label>{{t('notificationText')}}</mat-label>
+                                <textarea class="h-30" formControlName="notificationText"
+                                          matInput placeholder="{{t('updateFeaturesPlaceholder')}}"></textarea>
+                                <mat-error *ngIf="!templateForm.get('notificationText').valid">{{t('notificationTextError')}}</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="fill" class="min-w-200">
+                                <mat-label>{{t('validations')}}</mat-label>
+                                <textarea class="h-30" formControlName="validation"
+                                          matInput placeholder="{{t('validationsPlaceholder')}}"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </mat-tab>
+                <mat-tab label="{{t('fileCreationTabTitle')}}">
+                    <div class="container-mobile flex flex-row">
+
+                        <div class="basis-2/6 flex flex-row">
+
+                            <mat-form-field appearance="fill" class="min-w-96 mr-6">
+                                <mat-label>{{t('templateDimensionName')}}</mat-label>
+                                <input [(ngModel)]="newTemplateDimension.templateDimensionName" [ngModelOptions]="{standalone: true}" id="templateDimensionName" matInput
+                                       placeholder="{{t('templateDimensionNamePlaceholder')}}">
+                            </mat-form-field>
+                            <mat-error *ngIf="!isValidNewDimension">{{t('dimensionNameError')}}</mat-error>
+
+                            <mat-form-field appearance="fill" class="min-w-96 mr-6">
+                                <mat-label>{{t('dimensionName')}}</mat-label>
+                                <mat-select [(ngModel)]="newTemplateDimension.dimensionId" [ngModelOptions]="{standalone: true}" id="dimensionName" matNativeControl>
+                                    <mat-option [value]="0">{{t('selectDefault')}}</mat-option>
+                                    <mat-option *ngFor="let dimension of dimensionList" [value]="dimension.dimensionId">{{dimension.dimensionName}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <mat-error *ngIf="!isValidNewDimension">{{t('dimensionError')}}</mat-error>
+                        </div>
+                        <div class="dimension-generate-file">
+                            <button (click)="addDimension()" aria-label="Insere dimensão" class="btn-default bg-green" color="primary" id="addDimension" type="button">
+                                {{t('addTemplateDimension')}}
+                            </button>
+
+                        </div>
+                    </div>
+                    <div class="lista-box container p-0 ">
+                        <ngx-datatable [columnMode]="columnMode.force"
+                                       [footerHeight]="50"
+                                       [headerHeight]="40"
+                                       [messages]="messages"
+                                       [reorderable]="true"
+                                       [rowHeight]="'auto'"
+                                       [rows]="template.dimensions"
+                                       [scrollbarH]="true"
+                                       [virtualization]="false"
+                                       [sorts]="[{prop: 'templateDimensionOrder', dir: 'asc'}]"
+                                       class="material"
+                                       style="width: 100%;"
+                                       trackByProp="templateDimensionId">
+
+                            <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false" prop="templateDimensionOrder">
+                                <ng-template ngx-datatable-header-template>
+                                    <span class="text-bold">{{ t('templateDimensionOrder') }}</span>
+                                </ng-template>
+                            </ngx-datatable-column>
+
+                            <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false" prop="templateDimensionName">
+                                <ng-template ngx-datatable-header-template>
+                                    <span class="text-bold">{{ t('templateDimensionName') }}</span>
+                                </ng-template>
+                            </ngx-datatable-column>
+
+                            <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false" prop="dimensionName">
+                                <ng-template ngx-datatable-header-template>
+                                    <span class="text-bold">{{ t('dimensionName') }}</span>
+                                </ng-template>
+                            </ngx-datatable-column>
+
+                            <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false" prop="templateDimensionId">
+                                <ng-template ngx-datatable-header-template></ng-template>
+                                <ng-template let-value="value" ngx-datatable-cell-template>
+                                    <button (click)="edit(value)" [aria-label]="t('editTemplateDimension')" type="button"
+                                            [title]="t('editTemplateDimension')"
+                                            mat-icon-button>
+                                        <mat-icon class="orange-400-fg">edit</mat-icon>
+                                    </button>
+
+                                    <button (click)="delete(value)" [aria-label]="t('deleteTemplateDimension')" type="button"
+                                            [title]="t('deleteTemplateDimension')"
+                                            mat-icon-button>
+                                        <mat-icon class="orange-400-fg">delete_forever</mat-icon>
+                                    </button>
+
+                                    <button (click)="up(value)" [aria-label]="t('UpTemplateDimension')" type="button"
+                                            [title]="t('UpTemplateDimension')"
+                                            mat-icon-button>
+                                        <mat-icon class="orange-400-fg">arrow_upward</mat-icon>
+                                    </button>
+
+                                    <button (click)="down(value)" [aria-label]="t('DownTemplateDimension')" type="button"
+                                            [title]="t('DownTemplateDimension')"
+                                            mat-icon-button>
+                                        <mat-icon class="orange-400-fg">arrow_downward</mat-icon>
+                                    </button>
+                                </ng-template>
+                            </ngx-datatable-column>
+
+                        </ngx-datatable>
+
+                    </div>
+                </mat-tab>
+    </mat-tab-group>
+    <div class="text-right">
+        <button class="btn-default bg-green back" type="submit">{{ t('save') }}</button>
+        <button (click)="backToTemplates()" class="btn-default back">Voltar</button>
+    </div>
+    </form>
+</div>
+</div>

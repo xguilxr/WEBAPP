@@ -1,0 +1,68 @@
+@import 'variables';
+$text-size: 2em;
+
+:host {
+  @extend %host !optional;
+  display: flex;
+  align-items: center;
+
+  .erro-img {
+    width: 250px;
+    display: block;
+    margin: 1em auto 0 auto;
+  }
+
+  .erro-container {
+    max-width: 480px;
+    position: relative;
+    top: 15%;
+
+    h1 {
+      color: #03a9f4;
+      font-size: 20px;
+      line-height: 20px;
+      position: relative;
+      z-index: 2;
+      font-weight: 500;
+      text-align: center;
+
+      &.medium-text {
+        font-size: $text-size * 2;
+      }
+
+      &.large-text {
+        font-size: $text-size * 4;
+      }
+    }
+
+    p {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      place-content: center;
+      text-align: center;
+
+      &.large-text {
+        font-size: $text-size;
+      }
+
+      span {
+        z-index: 2;
+      }
+
+      &::before {
+        content: 'warning';
+        font-family: 'Material Icons';
+        z-index: 1;
+        position: absolute;
+        font-size: 15em;
+        color: #eaeaea;
+      }
+    }
+
+    button {
+      z-index: 2;
+    }
+  }
+}

@@ -1,0 +1,183 @@
+<div *transloco="let t" class="container">
+    <h3>{{ t('Dimension.createDimension') }}</h3>
+
+    <div class="flex flex-row gap-2">
+        <form (ngSubmit)="onSubmit()" [formGroup]="dimensionForm">
+            <div class="p-4 rounded-lg shadow-lg ">
+
+                <mat-form-field appearance="fill" class="min-w-96 mr-6">
+                    <mat-label>{{ t('Dimension.dimensionName') }}</mat-label>
+                    <input formControlName="name" id="Name" matInput placeholder="Placeholder" required>
+                    <mat-error *ngIf="!dimensionForm.get('name').valid">Por favor informe o nome da dimensão</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="min-w-200">
+                    <mat-label>{{ t('description') }}</mat-label>
+                    <input formControlName="description" id="Text" matInput placeholder="Placeholder" required>
+                    <mat-error *ngIf="!dimensionForm.get('description').valid">Por favor informe a descrição da
+                        dimensão
+                    </mat-error>
+                </mat-form-field>
+
+                <div class="w-200 mb-8">
+                    <mat-radio-group aria-label="tipo" formControlName="type" id="Type" required>
+                        <mat-label class="mr-4">{{ t('type') }}</mat-label>
+                        <mat-radio-button class="mr-4" value="1">{{ t('number') }}</mat-radio-button>
+                        <mat-radio-button class="mr-4" value="2">{{ t('text') }}</mat-radio-button>
+                        <mat-radio-button class="mr-4" value="3">{{ t('date') }}</mat-radio-button>
+                    </mat-radio-group>
+                    <mat-error *ngIf="!dimensionForm.get('type').valid">Por favor informe o tipo da dimensão</mat-error>
+                </div>
+
+                <mat-form-field *ngIf="dimensionForm.value.type == 2" appearance="fill" class="min-w-50 mr-6">
+                    <mat-label>{{ t('size') }}</mat-label>
+                    <input formControlName="size" id="Size" matInput placeholder="Placeholder" type="number">
+                </mat-form-field>
+
+                <mat-form-field *ngIf="dimensionForm.value.type == 1" appearance="fill" class="min-w-50 mr-6">
+                    <mat-label>{{ t('initialValue') }} </mat-label>
+                    <input formControlName="initialvalue" id="InitialValue" matInput placeholder="Placeholder">
+                </mat-form-field>
+
+                <mat-form-field *ngIf="dimensionForm.value.type == 1" appearance="fill" class="min-w-50 mr-6">
+                    <mat-label>{{ t('finalValue') }}</mat-label>
+                    <input formControlName="finalvalue" id="FinalValue" matInput placeholder="Placeholder">
+                </mat-form-field>
+
+                <mat-form-field *ngIf="dimensionForm.value.type == 3" appearance="fill" class="example-chip-list">
+                    <mat-label>{{ t('Dimension.format') }}</mat-label>
+                    <mat-chip-list #chipList aria-label="Seleção de Formato">
+                        <mat-chip
+                            (removed)="remove(pattern)"
+                            *ngFor="let pattern of patterns">
+                            {{pattern}}
+                            <button matChipRemove>
+                                <mat-icon>cancel</mat-icon>
+                            </button>
+                        </mat-chip>
+                        <input
+                            #patternInput
+                            (matChipInputTokenEnd)="add($event)"
+                            [formControl]="patternCtrl"
+                            [matAutocomplete]="auto"
+                            [matChipInputFor]="chipList"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                            formControlName="format"
+                            placeholder="Novo Formato...">
+                    </mat-chip-list>
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                        <mat-option *ngFor="let pattern of filteredPatterns | async" [value]="pattern">
+                            {{pattern}}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-error *ngIf="! (dimensionForm.get('format').valid) ">Por favor informe o formato da dimensão
+                    </mat-error>
+                </mat-form-field>
+
+                <!--
+                <mat-form-field appearance="fill" class="min-w-70 mr-6">
+                    <mat-label>Data Inicial</mat-label>
+                    <input matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="min-w-70 mr-6">
+                    <mat-label>Data Final</mat-label>
+                    <input matInput [matDatepicker]="picker2">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill" class="w-100 ">
+                    <mat-label>Selecione o formato</mat-label>
+                    <select matNativeControl id="mySelectId">
+                        <option value="" disabled selected></option>
+                        <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                        <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                    </select>
+                </mat-form-field>-->
+
+
+                <div class="footer text-right ">
+                    <button class="btn-default bg-green back" type="submit">{{ t('save') }}</button>
+                </div>
+            </div>
+        </form>
+
+        <div *ngIf="dimensionId > 0" class="p-1">
+            <div class="rounded-lg shadow-lg p-4">
+                <table class="tb-status">
+                    <tr>
+                        <th colspan="2">
+                            <button (click)="fileInputDomain.click()"
+                                    class="btn-default bg-gray w-100">{{ t('Dimension.allowedValuesMessage') }}</button>
+
+                            <input #fileInputDomain
+                                   (change)=" uploadDomainFile($event.target.files[0])"
+                                   accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/*"
+                                   hidden="true"
+                                   id="uploadDomain" type="file">
+
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="2" style="color:green">{{ msgUpload }}</th>
+                    </tr>
+                    <tr>
+                        <td class="title">{{ t('Dimension.loadRowsMessage') }}</td>
+                        <td>{{amountItemsUpload}}</td>
+                    </tr>
+                    <th colspan="2">
+                        <button (click)="showDimensionDomain()"
+                                *ngIf="(this.dimension.domains != null)&& (this.dimension.domains.length >0)" class="btn-default bg-gray w-100">Exibir Valores
+                        </button>
+                        <button (click)="delete()"
+                                *ngIf="(this.dimension.domains != null)&& (this.dimension.domains.length >0)" class="btn-default bg-gray w-100">Excluir Valores
+                        </button>
+                    </th>
+
+
+                </table>
+            </div>
+            <div class="rounded-lg shadow-lg mt-8 p-4">
+                <table class="tb-status">
+                    <tr>
+                        <th colspan="2">
+                            <button (click)="fileInputTest.click()"
+                                    class="btn-default bg-green w-100">{{ t('Dimension.testDimensionMessage') }}</button>
+
+                            <input #fileInputTest
+                                   (change)=" uploadTestFile($event.target.files[0])"
+                                   accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/*"
+                                   hidden="true"
+                                   id="uploadTest" type="file">
+                        </th>
+                    </tr>
+                    <!-- <tr>
+                         <th colspan="2" style="color:green">Teste concluído</th>
+                     </tr>
+                     <tr>
+                         <td class="title">Linhas com sucesso</td>
+                         <td class="text-right">450</td>
+                     </tr>
+                     <tr>
+                         <td class="title">Linhas com Erro</td>
+                         <td class="text-right">50</td>
+                     </tr>
+                     <tr>
+                         <td class="title">Total de linhas do arquivo</td>
+                         <td class="text-right">500</td>
+                     </tr>-->
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="footer text-right">
+        <button (click)="backToTemplates()" class="btn-default back">{{ t('back') }}</button>
+    </div>
+</div>

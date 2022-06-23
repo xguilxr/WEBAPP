@@ -1,0 +1,110 @@
+<div *transloco="let t; read: 'Template'" class="container templates">
+    <h3>{{ t('title') }}</h3>
+
+    <div class="flex flex-row">
+
+        <div class="basis-2/6 flex flex-row">
+            <mat-form-field appearance="" class="search-template">
+                <mat-label>{{ t('searchTitle') }}</mat-label>
+                <input [(ngModel)]="filter.name" matInput placeholder="Placeholder">
+                <mat-hint>{{ t('searchMessage') }}</mat-hint>
+            </mat-form-field>
+
+            <button class="ml-2 mt-8" (click)="getFilteredTemplates()" aria-label="Example icon button with a menu icon" color="primary"
+                    mat-mini-fab>
+                <mat-icon>search</mat-icon>
+            </button>
+        </div>
+        <div class="dimension-generate-file">
+    
+                <button (click)="createTemplate()" class="btn-default bg-green">{{ t('createTemplate') }}</button>
+        </div>
+
+       
+    </div>
+        <div class="lista-box container p-0">
+            <ngx-datatable (page)="pageChanged($event)"
+                           [columnMode]="columnMode.force"
+                           [count]="templates.totalOfItems"
+                           [externalPaging]="true"
+                           [footerHeight]="50"
+                           [headerHeight]="40"
+                           [limit]="templates.itemsPerPage"
+                           [messages]="messages"
+                           [offset]="templates.currentPage - 1"
+                           [reorderable]="false"
+                           [rowHeight]="'auto'"
+                           [rows]="templates.items"
+                           [scrollbarH]="true"
+                           [virtualization]="false"
+                           class="material"
+                           style="width: 100%;"
+                           trackByProp="templateId">
+
+                <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false" prop="templateName">
+                    <ng-template ngx-datatable-header-template><span class="text-bold">{{ t('name') }}</span></ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false" prop="templateFileFormat.name">
+                    <ng-template ngx-datatable-header-template>
+                        <span class="text-bold">{{ t('formatFile') }}</span>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false" prop="createUserName">
+                    <ng-template ngx-datatable-header-template>
+                        <span class="text-bold">{{ t('userCreate') }}</span>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false">
+                    <ng-template ngx-datatable-header-template>
+                        <span class="text-bold">{{ t('dateCreate') }}</span>
+                    </ng-template>
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{row.createDate | date:'shortDate':'0':'pt'}}
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false" prop="updateUserName">
+                    <ng-template ngx-datatable-header-template>
+                        <span class="text-bold">{{ t('userUpdate') }}</span>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false">
+                    <ng-template ngx-datatable-header-template>
+                        <span class="text-bold">{{ t('dateUpdate') }}</span>
+                    </ng-template>
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        {{row.updateDate | date:'shortDate':'0':'pt'}}
+                    </ng-template>
+
+                </ngx-datatable-column>
+
+                <ngx-datatable-column [draggable]="false" [resizeable]="false" [sortable]="false" prop="templateId">
+                    <ng-template ngx-datatable-header-template></ng-template>
+                    <ng-template let-value="value" ngx-datatable-cell-template>
+                        <button (click)="edit(value)" [aria-label]="t('editTemplate')" [title]="t('editTemplate')"
+                                mat-icon-button>
+                            <mat-icon class="orange-400-fg">edit</mat-icon>
+                        </button>
+
+                        <button (click)="delete(value)" [aria-label]="t('deleteTemplate')" [title]="t('deleteTemplate')"
+                                mat-icon-button>
+                            <mat-icon class="orange-400-fg">delete_forever</mat-icon>
+                        </button>
+
+                        <button (click)="copyTemplate(value)" [aria-label]="t('copyTemplate')" [title]="t('copyTemplate')"
+                                mat-icon-button>
+                            <mat-icon class="orange-400-fg">file_copy</mat-icon>
+                        </button>
+                    </ng-template>
+                </ngx-datatable-column>
+            </ngx-datatable>
+        </div>
+
+        <div class="footer text-right">
+            <button (click)="backToDashboard()" class="btn-default back">Voltar</button>
+        </div>
+    </div>
